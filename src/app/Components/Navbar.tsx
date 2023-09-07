@@ -1,16 +1,17 @@
-"use client";
+
 import { useSession, signIn, signOut } from "next-auth/react";
 import React from "react";
 import Link from "next/link";
 
 import styles from "./navbar.module.css";
 
+
 function Authbtn() {
   const { data: session } = useSession();
   if (session) {
     return (
       <>
-         {session.user.email} <br />
+         {session.user?.email} <br />
         <button
           className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-blue-300 hover:bg-gray-100 rounded-xl"
           onClick={() => signOut()}
