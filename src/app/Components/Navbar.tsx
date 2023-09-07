@@ -1,7 +1,38 @@
+"use client";
+import { useSession, signIn, signOut } from "next-auth/react";
 import React from "react";
 import Link from "next/link";
-import { type } from "os";
+
 import styles from "./navbar.module.css";
+
+function Authbtn() {
+  const { data: session } = useSession();
+  if (session) {
+    return (
+      <>
+         {session.user.email} <br />
+        <button
+          className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-blue-300 hover:bg-gray-100 rounded-xl"
+          onClick={() => signOut()}
+        >
+          Sign out
+        </button>
+      </>
+    );
+  }
+  return (
+    <>
+      <br />
+      <button
+        className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-blue-300 hover:bg-gray-100 rounded-xl"
+        onClick={() => signIn()}
+      >
+        Sign in
+      </button>
+    </>
+  );
+}
+
 function Navbar() {
   return (
     <div>
@@ -65,19 +96,11 @@ function Navbar() {
                   Contact Us
                 </Link>
               </li>
+              
             </ul>
-            <Link
-              className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold rounded-xl transition duration-200"
-              href="#"
-            >
-              Sign In
-            </Link>
-            <Link
-              className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-black font-bold rounded-xl transition duration-200"
-              href="#"
-            >
-              Sign up
-            </Link>
+            <div className="mb-4 ">
+                <Authbtn />
+              </div>
           </nav>
           <div className="navbar-menu relative z-50 hidden">
             <div className="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
@@ -106,18 +129,14 @@ function Navbar() {
               </div>
               <div className="mt-auto">
                 <div className="pt-6">
-                  <Link
-                    className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl"
-                    href="#"
-                  >
-                    Sign in
-                  </Link>
-                  <Link
-                    className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded-xl"
-                    href="#"
-                  >
-                    Sign Up
-                  </Link>
+                  <div>
+                    <Link
+                      className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded-xl"
+                      href="#"
+                    >
+                      Sign Up
+                    </Link>
+                  </div>
                 </div>
                 <p className="my-4 text-xs text-center text-gray-400">
                   <span>Copyright © 2021</span>
